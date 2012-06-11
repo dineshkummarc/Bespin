@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: omnisync
+Version: 0.1a0
+Summary: Multiprotocol file synchroniser.
+Home-page: http://launchpad.net/omnisync/
+Author: Stavros Korokithakis
+Author-email: stavros@korokithakis.net
+License: Simplified BSD License
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires: paramiko
+Requires: boto

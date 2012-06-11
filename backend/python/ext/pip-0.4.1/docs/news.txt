@@ -1,0 +1,214 @@
+News for pip
+============
+
+tip
+---
+
+* Added ability to override the default log file name (``pip-log.txt``)
+  with the environmental variable ``$PIP_LOG_FILE``.
+
+* Made the freeze command print installed packages to stdout instead of
+  writing them to a file. Use simple redirection (e.g.
+  ``pip freeze > stable-req.txt``) to get a file with requirements.
+
+* Fixed problem with freezing editable packages from a Git repository.
+
+* Added support for base URLs using ``<base href='...'>`` when parsing
+  HTML pages.
+
+* Fixed installing of non-editable packages from version control systems.
+
+* Fixed issue with Bazaar's bzr+ssh scheme.
+
+* Added download command to retrieve package archives. If given an editable
+  package it will create an archives of it.
+
+* Added ability to pass local file and directory paths to ``--find-links``,
+  e.g. ``--find-links=file:///path/to/my/private/archive``
+
+* Reduced the amount of console log messages when fetching a page to find a
+  distribution was problematic. The full messages can be found in pip-log.txt.
+
+* Added ``--no-deps`` option to install ignore package dependencies
+
+* Added ``--no-index`` option to ignore the package index (PyPI) temporarily
+
+* Added uninstall support.
+
+0.4
+---
+
+* Make ``-e`` work better with local hg repositories
+
+* Construct PyPI URLs the exact way easy_install constructs URLs (you
+  might notice this if you use a custom index that is
+  slash-sensitive).
+
+* Improvements on Windows (from `Ionel Maries Cristian
+  <http://ionelmc.wordpress.com/>`_).
+
+* Fixed problem with not being able to install private git repositories.
+
+* Make ``pip zip`` zip all its arguments, not just the first.
+
+* Fix some filename issues on Windows.
+
+* Allow the ``-i`` and ``--extra-index-url`` options in requirements
+  files.
+
+* Fix the way bundle components are unpacked and moved around, to make
+  bundles work.
+
+* Adds ``-s`` option to allow the access to the global site-packages if a
+  virtualenv is to be created.
+
+* Fixed support for Subversion 1.6.
+
+0.3.1
+-----
+
+* Improved virtualenv restart and various path/cleanup problems on win32.
+
+* Fixed a regression with installing from svn repositories (when not
+  using ``-e``).
+
+* Fixes when installing editable packages that put their source in a
+  subdirectory (like ``src/``).
+
+* Improve ``pip -h``
+
+0.3
+---
+
+* Added support for editable packages created from Git, Mercurial and Bazaar
+  repositories and ability to freeze them. Refactored support for version
+  control systems.
+
+* Do not use ``sys.exit()`` from inside the code, instead use a
+  return.  This will make it easier to invoke programmatically.
+
+* Put the install record in ``Package.egg-info/installed-files.txt``
+  (previously they went in
+  ``site-packages/install-record-Package.txt``).
+
+* Fix a problem with ``pip freeze`` not including ``-e svn+`` when an
+  svn structure is peculiar.
+
+* Allow ``pip -E`` to work with a virtualenv that uses a different
+  version of Python than the parent environment.
+
+* Fixed Win32 virtualenv (``-E``) option.
+
+* Search the links passed in with ``-f`` for packages.
+
+* Detect zip files, even when the file doesn't have a ``.zip``
+  extension and it is served with the wrong Content-Type.
+
+* Installing editable from existing source now works, like ``pip
+  install -e some/path/`` will install the package in ``some/path/``.
+  Most importantly, anything that package requires will also be
+  installed by pip.
+
+* Add a ``--path`` option to ``pip un/zip``, so you can avoid zipping
+  files that are outside of where you expect.
+
+* Add ``--simulate`` option to ``pip zip``.
+
+0.2.1
+-----
+
+* Fixed small problem that prevented using ``pip.py`` without actually
+  installing pip.
+
+* Fixed ``--upgrade``, which would download and appear to install
+  upgraded packages, but actually just reinstall the existing package.
+
+* Fixed Windows problem with putting the install record in the right
+  place, and generating the ``pip`` script with Setuptools.
+
+* Download links that include embedded spaces or other unsafe
+  characters (those characters get %-encoded).
+
+* Fixed use of URLs in requirement files, and problems with some blank
+  lines.
+
+* Turn some tar file errors into warnings.
+
+0.2
+---
+
+* Renamed to ``pip``, and to install you now do ``pip install
+  PACKAGE``
+
+* Added command ``pip zip PACKAGE`` and ``pip unzip PACKAGE``.  This
+  is particularly intended for Google App Engine to manage libraries
+  to stay under the 1000-file limit.
+
+* Some fixes to bundles, especially editable packages and when
+  creating a bundle using unnamed packages (like just an svn
+  repository without ``#egg=Package``).
+
+0.1.4
+-----
+
+* Added an option ``--install-option`` to pass options to pass
+  arguments to ``setup.py install``
+
+* ``.svn/`` directories are no longer included in bundles, as these
+  directories are specific to a version of svn -- if you build a
+  bundle on a system with svn 1.5, you can't use the checkout on a
+  system with svn 1.4.  Instead a file ``svn-checkout.txt`` is
+  included that notes the original location and revision, and the
+  command you can use to turn it back into an svn checkout.  (Probably
+  unpacking the bundle should, maybe optionally, recreate this
+  information -- but that is not currently implemented, and it would
+  require network access.)
+
+* Avoid ambiguities over project name case, where for instance
+  MyPackage and mypackage would be considered different packages.
+  This in particular caused problems on Macs, where ``MyPackage/`` and
+  ``mypackage/`` are the same directory.
+
+* Added support for an environmental variable
+  ``$PIP_DOWNLOAD_CACHE`` which will cache package downloads, so
+  future installations won't require large downloads.  Network access
+  is still required, but just some downloads will be avoided when
+  using this.
+
+0.1.3
+-----
+
+* Always use ``svn checkout`` (not ``export``) so that
+  ``tag_svn_revision`` settings give the revision of the package.
+
+* Don't update checkouts that came from ``.pybundle`` files.
+
+0.1.2
+-----
+
+* Improve error text when there are errors fetching HTML pages when
+  seeking packages.
+
+* Improve bundles: include empty directories, make them work with
+  editable packages.
+
+* If you use ``-E env`` and the environment ``env/`` doesn't exist, a
+  new virtual environment will be created.
+
+* Fix ``dependency_links`` for finding packages.
+
+0.1.1
+-----
+
+* Fixed a NameError exception when running pip outside of a
+  virtualenv environment.
+
+* Added HTTP proxy support (from Prabhu Ramachandran)
+
+* Fixed use of ``hashlib.md5`` on python2.5+ (also from Prabhu
+  Ramachandran)
+
+0.1
+---
+
+* Initial release

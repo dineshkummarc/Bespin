@@ -1,0 +1,669 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+  <head profile="http://gmpg.org/xfn/11">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>virtualenv &mdash; virtualenv v1.3.4 documentation - TOPP Labs</title>
+    <link rel="stylesheet" href="http://topplabs.org/wp-content/themes/topplabs/tripoli_002.css">  
+    <link rel="stylesheet" href="http://topplabs.org/wp-content/themes/topplabs/tripoli_003.css">    
+    <link href="http://topplabs.org/wp-content/themes/topplabs/tripoli.css" rel="stylesheet" media="all">	
+    <style type="text/css" media="screen">
+      @import url( http://topplabs.org/wp-content/themes/topplabs/style.css?v=3 );
+    </style>
+
+    <link rel="stylesheet" href="_static/default.css" type="text/css" /> 
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.3.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="virtualenv v1.3.4 documentation" href="" /> 
+  </head>
+  <body>
+<div id="heading">
+	<div class="content">
+		<h1><a href="http://topplabs.org/">TOPP Labs</a></h1>
+		<h2><span>Open Source Civic Hacking @ </span><a href="http://theopenplanningproject.org/" onclick="pageTracker._trackPageview('/outgoing/theopenplanningproject.org?referer=');">The Open Planning Project</a></h2>
+		<ul class="nav">
+			<li class="nav-blog"><a href="http://topplabs.org/civichacker/">The Civic Hacker Blog</a></li>
+			<li class="nav-wiki"><a href="http://ideas.topplabs.org/" onclick="pageTracker._trackPageview('/outgoing/ideas.topplabs.org/?referer=');">Ideas Wiki</a></li>
+			<li class="nav-lists"><a href="http://lists.topplabs.org/civichacker/" onclick="pageTracker._trackPageview('/outgoing/lists.topplabs.org/civichacker/?referer=');">Discussion Lists</a></li> <!-- will be http://lists.topplabs.org/ soon -->
+			<li class="nav-about"><a href="http://topplabs.org/about/">About</a></li>
+		</ul>	
+
+
+		<h3><a href="">virtualenv</a></h3>
+		<div class="sub-heading">The Open Planning Project</div>
+	</div>
+</div>
+
+<!--
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="">virtualenv v1.3.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div> -->  
+
+<div id="body">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="virtualenv">
+<h1><a class="toc-backref" href="#id18">virtualenv</a><a class="headerlink" href="#virtualenv" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference external" href="http://groups.google.com/group/python-virtualenv/">Discussion list</a></li>
+<li><a class="reference external" href="https://bugs.launchpad.net/virtualenv/">Bugs</a></li>
+</ul>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#virtualenv" id="id18">virtualenv</a><ul>
+<li><a class="reference internal" href="#status-and-license" id="id19">Status and License</a></li>
+<li><a class="reference internal" href="#what-it-does" id="id20">What It Does</a></li>
+<li><a class="reference internal" href="#creating-your-own-bootstrap-scripts" id="id21">Creating Your Own Bootstrap Scripts</a><ul>
+<li><a class="reference internal" href="#bootstrap-example" id="id22">Bootstrap Example</a></li>
+<li><a class="reference internal" href="#activate-script" id="id23">activate script</a></li>
+<li><a class="reference internal" href="#the-no-site-packages-option" id="id24">The <tt class="docutils literal"><span class="pre">--no-site-packages</span></tt> Option</a></li>
+<li><a class="reference internal" href="#using-virtualenv-without-bin-python" id="id25">Using Virtualenv without <tt class="docutils literal"><span class="pre">bin/python</span></tt></a></li>
+<li><a class="reference internal" href="#making-environments-relocatable" id="id26">Making Environments Relocatable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#compare-contrast-with-alternatives" id="id27">Compare &amp; Contrast with Alternatives</a></li>
+<li><a class="reference internal" href="#other-documentation-and-links" id="id28">Other Documentation and Links</a></li>
+<li><a class="reference internal" href="#changes-news" id="id29">Changes &amp; News</a><ul>
+<li><a class="reference internal" href="#svn-trunk" id="id30">svn trunk</a></li>
+<li><a class="reference internal" href="#id2" id="id31">1.3.3</a></li>
+<li><a class="reference internal" href="#id3" id="id32">1.3.2</a></li>
+<li><a class="reference internal" href="#id4" id="id33">1.3.1</a></li>
+<li><a class="reference internal" href="#id5" id="id34">1.3</a></li>
+<li><a class="reference internal" href="#id6" id="id35">1.2</a></li>
+<li><a class="reference internal" href="#id7" id="id36">1.1.1</a></li>
+<li><a class="reference internal" href="#id8" id="id37">1.1</a></li>
+<li><a class="reference internal" href="#id9" id="id38">1.0</a></li>
+<li><a class="reference internal" href="#id10" id="id39">0.9.2</a></li>
+<li><a class="reference internal" href="#id11" id="id40">0.9.1</a></li>
+<li><a class="reference internal" href="#id12" id="id41">0.9</a></li>
+<li><a class="reference internal" href="#id13" id="id42">0.8.4</a></li>
+<li><a class="reference internal" href="#id14" id="id43">0.8.3</a></li>
+<li><a class="reference internal" href="#id15" id="id44">0.8.2</a></li>
+<li><a class="reference internal" href="#id16" id="id45">0.8.1</a></li>
+<li><a class="reference internal" href="#id17" id="id46">0.8</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="status-and-license">
+<h2><a class="toc-backref" href="#id19">Status and License</a><a class="headerlink" href="#status-and-license" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">virtualenv</span></tt> is a successor to <a class="reference external" href="http://cheeseshop.python.org/pypi/workingenv.py">workingenv</a>, and an extension
+of <a class="reference external" href="http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python">virtual-python</a>.</p>
+<p>It is written by Ian Bicking, and sponsored by the <a class="reference external" href="http://topp.openplans.org">Open Planning
+Project</a>.  It is licensed under an
+<a class="reference external" href="http://svn.colorstudy.com/virtualenv/trunk/docs/license.txt">MIT-style permissive license</a>.</p>
+<p>You can install it with <tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">virtualenv</span></tt>, or from the
+<a class="reference external" href="http://svn.colorstudy.com/virtualenv/trunk#egg=virtualenv-dev">subversion repository</a> with
+<tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">virtualenv==dev</span></tt>.</p>
+</div>
+<div class="section" id="what-it-does">
+<h2><a class="toc-backref" href="#id20">What It Does</a><a class="headerlink" href="#what-it-does" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">virtualenv</span></tt> is a tool to create isolated Python environments.</p>
+<p>The basic problem being addressed is one of dependencies and versions,
+and indirectly permissions.  Imagine you have an application that
+needs version 1 of LibFoo, but another application requires version
+2.  How can you use both these applications?  If you install
+everything into <tt class="docutils literal"><span class="pre">/usr/lib/python2.4/site-packages</span></tt> (or whatever your
+platform&#8217;s standard location is), it&#8217;s easy to end up in a situation
+where you unintentionally upgrade an application that shouldn&#8217;t be
+upgraded.</p>
+<p>Or more generally, what if you want to install an application <em>and
+leave it be</em>?  If an application works, any change in its libraries or
+the versions of those libraries can break the application.</p>
+<p>Also, what if you can&#8217;t install packages into the global
+<tt class="docutils literal"><span class="pre">site-packages</span></tt> directory?  For instance, on a shared host.</p>
+<p>In all these cases, <tt class="docutils literal"><span class="pre">virtualenv</span></tt> can help you.  It creates an
+environment that has its own installation directories, that doesn&#8217;t
+share libraries with other virtualenv environments (and optionally
+doesn&#8217;t use the globally installed libraries either).</p>
+<p>The basic usage is:</p>
+<div class="highlight-python"><pre>$ python virtualenv.py ENV</pre>
+</div>
+<p>If you install it you can also just do <tt class="docutils literal"><span class="pre">virtualenv</span> <span class="pre">ENV</span></tt>.</p>
+<p>This creates <tt class="docutils literal"><span class="pre">ENV/lib/python2.4/site-packages</span></tt> (or
+<tt class="docutils literal"><span class="pre">ENV/lib/python2.5/site-packages</span></tt> on Python 2.5, etc), where any
+libraries you install will go.  It also creates <tt class="docutils literal"><span class="pre">ENV/bin/python</span></tt>,
+which is a Python interpreter that uses this environment.  Anytime you
+use that interpreter (including when a script has
+<tt class="docutils literal"><span class="pre">#!/path/to/ENV/bin/python</span></tt> in it) the libraries in that environment
+will be used.  (<strong>Note for Windows:</strong> scripts and executables on
+Windows go in <tt class="docutils literal"><span class="pre">ENV\Scripts\</span></tt>; everywhere you see <tt class="docutils literal"><span class="pre">bin/</span></tt> replace it
+with <tt class="docutils literal"><span class="pre">Scripts\</span></tt>)</p>
+<p>It also installs <a class="reference external" href="http://peak.telecommunity.com/DevCenter/setuptools">Setuptools</a> for you, and if
+you use <tt class="docutils literal"><span class="pre">ENV/bin/easy_install</span></tt> the packages will be installed into
+the environment.</p>
+</div>
+<div class="section" id="creating-your-own-bootstrap-scripts">
+<h2><a class="toc-backref" href="#id21">Creating Your Own Bootstrap Scripts</a><a class="headerlink" href="#creating-your-own-bootstrap-scripts" title="Permalink to this headline">¶</a></h2>
+<p>While this creates an environment, it doesn&#8217;t put anything into the
+environment.  Developers may find it useful to distribute a script
+that sets up a particular environment, for example a script that
+installs a particular web application.</p>
+<p>To create a script like this, call
+<tt class="docutils literal"><span class="pre">virtualenv.create_bootstrap_script(extra_text)</span></tt>, and write the
+result to your new bootstrapping script.  Here&#8217;s the documentation
+from the docstring:</p>
+<p>Creates a bootstrap script, which is like this script but with
+extend_parser, adjust_options, and after_install hooks.</p>
+<p>This returns a string that (written to disk of course) can be used
+as a bootstrap script with your own customizations.  The script
+will be the standard virtualenv.py script, with your extra text
+added (your extra text should be Python code).</p>
+<p>If you include these functions, they will be called:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">extend_parser(optparse_parser)</span></tt>:</dt>
+<dd>You can add or remove options from the parser here.</dd>
+<dt><tt class="docutils literal"><span class="pre">adjust_options(options,</span> <span class="pre">args)</span></tt>:</dt>
+<dd>You can change options here, or change the args (if you accept
+different kinds of arguments, be sure you modify <tt class="docutils literal"><span class="pre">args</span></tt> so it is
+only <tt class="docutils literal"><span class="pre">[DEST_DIR]</span></tt>).</dd>
+</dl>
+<p><tt class="docutils literal"><span class="pre">after_install(options,</span> <span class="pre">home_dir)</span></tt>:</p>
+<blockquote>
+<p>After everything is installed, this function is called.  This
+is probably the function you are most likely to use.  An
+example would be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">after_install</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">home_dir</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s">&#39;win32&#39;</span><span class="p">:</span>
+        <span class="n">bin</span> <span class="o">=</span> <span class="s">&#39;Scripts&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bin</span> <span class="o">=</span> <span class="s">&#39;bin&#39;</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">join</span><span class="p">(</span><span class="n">home_dir</span><span class="p">,</span> <span class="n">bin</span><span class="p">,</span> <span class="s">&#39;easy_install&#39;</span><span class="p">),</span>
+                     <span class="s">&#39;MyPackage&#39;</span><span class="p">])</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="n">join</span><span class="p">(</span><span class="n">home_dir</span><span class="p">,</span> <span class="n">bin</span><span class="p">,</span> <span class="s">&#39;my-package-script&#39;</span><span class="p">),</span>
+                     <span class="s">&#39;setup&#39;</span><span class="p">,</span> <span class="n">home_dir</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>This example immediately installs a package, and runs a setup
+script from that package.</p>
+</blockquote>
+<div class="section" id="bootstrap-example">
+<h3><a class="toc-backref" href="#id22">Bootstrap Example</a><a class="headerlink" href="#bootstrap-example" title="Permalink to this headline">¶</a></h3>
+<p>Here&#8217;s a more concrete example of how you could use this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">virtualenv</span><span class="o">,</span> <span class="nn">textwrap</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">virtualenv</span><span class="o">.</span><span class="n">create_bootstrap_script</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">import os, subprocess</span>
+<span class="s">def after_install(options, home_dir):</span>
+<span class="s">    etc = join(home_dir, &#39;etc&#39;)</span>
+<span class="s">    if not os.path.exists(etc):</span>
+<span class="s">        os.makedirs(etc)</span>
+<span class="s">    subprocess.call([join(home_dir, &#39;bin&#39;, &#39;easy_install&#39;),</span>
+<span class="s">                     &#39;BlogApplication&#39;])</span>
+<span class="s">    subprocess.call([join(home_dir, &#39;bin&#39;, &#39;paster&#39;),</span>
+<span class="s">                     &#39;make-config&#39;, &#39;BlogApplication&#39;,</span>
+<span class="s">                     join(etc, &#39;blog.ini&#39;)])</span>
+<span class="s">    subprocess.call([join(home_dir, &#39;bin&#39;, &#39;paster&#39;),</span>
+<span class="s">                     &#39;setup-app&#39;, join(etc, &#39;blog.ini&#39;)])</span>
+<span class="s">&quot;&quot;&quot;</span><span class="p">))</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;blog-bootstrap.py&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Another example is available <a class="reference external" href="https://svn.openplans.org/svn/fassembler/trunk/fassembler/create-venv-script.py">here</a>.</p>
+</div>
+<div class="section" id="activate-script">
+<h3><a class="toc-backref" href="#id23">activate script</a><a class="headerlink" href="#activate-script" title="Permalink to this headline">¶</a></h3>
+<p>In a newly created virtualenv there will be a <tt class="docutils literal"><span class="pre">bin/activate</span></tt> shell
+script, or a <tt class="docutils literal"><span class="pre">Scripts/activate.bat</span></tt> batch file on Windows.</p>
+<p>On Posix systems you can do:</p>
+<div class="highlight-python"><pre>$ source bin/activate</pre>
+</div>
+<p>This will change your <tt class="docutils literal"><span class="pre">$PATH</span></tt> to point to the virtualenv <tt class="docutils literal"><span class="pre">bin/</span></tt>
+directory, and update your prompt.  Unlike workingenv, this is all it
+does; it&#8217;s a convenience.  But if you use the complete path like
+<tt class="docutils literal"><span class="pre">/path/to/env/bin/python</span> <span class="pre">script.py</span></tt> you do not need to activate the
+environment first.  You have to use <tt class="docutils literal"><span class="pre">source</span></tt> because it changes the
+environment in-place.  After activating an environment you can use the
+function <tt class="docutils literal"><span class="pre">deactivate</span></tt> to undo the changes.</p>
+<p>On Windows you just do:</p>
+<div class="highlight-python"><pre>&gt; \path\to\env\bin\activate.bat</pre>
+</div>
+<p>And use <tt class="docutils literal"><span class="pre">deactivate.bat</span></tt> to undo the changes.</p>
+</div>
+<div class="section" id="the-no-site-packages-option">
+<h3><a class="toc-backref" href="#id24">The <tt class="docutils literal"><span class="pre">--no-site-packages</span></tt> Option</a><a class="headerlink" href="#the-no-site-packages-option" title="Permalink to this headline">¶</a></h3>
+<p>If you build with <tt class="docutils literal"><span class="pre">virtualenv</span> <span class="pre">--no-site-packages</span> <span class="pre">ENV</span></tt> it will <em>not</em>
+inherit any packages from <tt class="docutils literal"><span class="pre">/usr/lib/python2.5/site-packages</span></tt> (or
+wherever your global site-packages directory is).  This can be used if
+you don&#8217;t have control over site-packages and don&#8217;t want to depend on
+the packages there, or you just want more isolation from the global
+system.</p>
+</div>
+<div class="section" id="using-virtualenv-without-bin-python">
+<h3><a class="toc-backref" href="#id25">Using Virtualenv without <tt class="docutils literal"><span class="pre">bin/python</span></tt></a><a class="headerlink" href="#using-virtualenv-without-bin-python" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes you can&#8217;t or don&#8217;t want to use the Python interpreter
+created by the virtualenv.  For instance, in a <a class="reference external" href="http://www.modpython.org/">mod_python</a> or <a class="reference external" href="http://www.modwsgi.org/">mod_wsgi</a>
+environment, there is only one interpreter.</p>
+<p>Luckily, it&#8217;s easy.  You must use the custom Python interpreter to
+<em>install</em> libraries.  But to <em>use</em> libraries, you just have to be sure
+the path is correct.  A script is available to correct the path.  You
+can setup the environment like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">activate_this</span> <span class="o">=</span> <span class="s">&#39;/path/to/env/bin/activate_this.py&#39;</span>
+<span class="nb">execfile</span><span class="p">(</span><span class="n">activate_this</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">__file__</span><span class="o">=</span><span class="n">activate_this</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This will change <tt class="docutils literal"><span class="pre">sys.path</span></tt> and even change <tt class="docutils literal"><span class="pre">sys.prefix</span></tt>, but also
+allow you to use an existing interpreter.  Items in your environment
+will show up first on <tt class="docutils literal"><span class="pre">sys.path</span></tt>, before global items.  However,
+this cannot undo the activation of other environments, or modules that
+have been imported.  You shouldn&#8217;t try to, for instance, activate an
+environment before a web request; you should activate <em>one</em>
+environment as early as possible, and not do it again in that process.</p>
+</div>
+<div class="section" id="making-environments-relocatable">
+<h3><a class="toc-backref" href="#id26">Making Environments Relocatable</a><a class="headerlink" href="#making-environments-relocatable" title="Permalink to this headline">¶</a></h3>
+<p>Note: this option is somewhat experimental, and there are probably
+caveats that have not yet been identified.  Also this does not
+currently work on Windows.</p>
+<p>Normally environments are tied to a specific path.  That means that
+you cannot move an environment around or copy it to another computer.
+You can fix up an environment to make it relocatable with the
+command:</p>
+<div class="highlight-python"><pre>$ virtualenv --relocatable ENV</pre>
+</div>
+<p>This will make some of the files created by setuptools use relative
+paths, and will change all the scripts to use <tt class="docutils literal"><span class="pre">activate_this.py</span></tt>
+instead of using the location of the Python interpreter to select the
+environment.</p>
+<p><strong>Note:</strong> you must run this after you&#8217;ve installed <em>any</em> packages into
+the environment.  If you make an environment relocatable, then
+install a new package, you must run <tt class="docutils literal"><span class="pre">virtualenv</span> <span class="pre">--relocatable</span></tt>
+again.</p>
+<p>Also, this <strong>does not make your packages cross-platform</strong>.  You can
+move the directory around, but it can only be used on other similar
+computers.  Some known environmental differences that can cause
+incompatibilities: a different version of Python, when one platform
+uses UCS2 for its internal unicode representation and another uses
+UCS4 (a compile-time option), obvious platform changes like Windows
+vs. Linux, or Intel vs. ARM, and if you have libraries that bind to C
+libraries on the system, if those C libraries are located somewhere
+different (either different versions, or a different filesystem
+layout).</p>
+<p>Currently the <tt class="docutils literal"><span class="pre">--no-site-packages</span></tt> option will not be honored if you
+use this on an environment.</p>
+</div>
+</div>
+<div class="section" id="compare-contrast-with-alternatives">
+<h2><a class="toc-backref" href="#id27">Compare &amp; Contrast with Alternatives</a><a class="headerlink" href="#compare-contrast-with-alternatives" title="Permalink to this headline">¶</a></h2>
+<p>There are several alternatives that create isolated environments:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">workingenv</span></tt> (which I do not suggest you use anymore) is the
+predecessor to this library.  It used the main Python interpreter,
+but relied on setting <tt class="docutils literal"><span class="pre">$PYTHONPATH</span></tt> to activate the environment.
+This causes problems when running Python scripts that aren&#8217;t part of
+the environment (e.g., a globally installed <tt class="docutils literal"><span class="pre">hg</span></tt> or <tt class="docutils literal"><span class="pre">bzr</span></tt>).  It
+also conflicted a lot with Setuptools.</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://peak.telecommunity.com/DevCenter/EasyInstall#creating-a-virtual-python">virtual-python</a>
+is also a predecessor to this library.  It uses only symlinks, so it
+couldn&#8217;t work on Windows.  It also symlinks over the <em>entire</em>
+standard library and global <tt class="docutils literal"><span class="pre">site-packages</span></tt>.  As a result, it
+won&#8217;t see new additions to the global <tt class="docutils literal"><span class="pre">site-packages</span></tt>.</p>
+<p>This script only symlinks a small portion of the standard library
+into the environment, and so on Windows it is feasible to simply
+copy these files over.  Also, it creates a new/empty
+<tt class="docutils literal"><span class="pre">site-packages</span></tt> and also adds the global <tt class="docutils literal"><span class="pre">site-packages</span></tt> to the
+path, so updates are tracked separately.  This script also installs
+Setuptools automatically, saving a step and avoiding the need for
+network access.</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://pypi.python.org/pypi/zc.buildout">zc.buildout</a> doesn&#8217;t
+create an isolated Python environment in the same style, but
+achieves similar results through a declarative config file that sets
+up scripts with very particular packages.  As a declarative system,
+it is somewhat easier to repeat and manage, but more difficult to
+experiment with.  <tt class="docutils literal"><span class="pre">zc.buildout</span></tt> includes the ability to setup
+non-Python systems (e.g., a database server or an Apache instance).</p>
+</li>
+</ul>
+<p>I <em>strongly</em> recommend anyone doing application development or
+deployment use one of these tools.</p>
+</div>
+<div class="section" id="other-documentation-and-links">
+<h2><a class="toc-backref" href="#id28">Other Documentation and Links</a><a class="headerlink" href="#other-documentation-and-links" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>James Gardner has written a tutorial on using <a class="reference external" href="http://wiki.pylonshq.com/display/pylonscookbook/Using+a+Virtualenv+Sandbox">virtualenv with
+Pylons</a>.</li>
+<li><a class="reference external" href="http://blog.ianbicking.org/2007/10/10/workingenv-is-dead-long-live-virtualenv/">Blog announcement</a>.</li>
+<li>Doug Hellmann wrote a description of his <a class="reference external" href="http://www.doughellmann.com/articles/CompletelyDifferent-2008-05-virtualenvwrapper/index.html">command-line work flow
+using virtualenv (virtualenvwrapper)</a>
+including some handy scripts to make working with multiple
+environments easier.  He also wrote <a class="reference external" href="http://www.doughellmann.com/articles/CompletelyDifferent-2008-02-ipython-and-virtualenv/index.html">an example of using virtualenv
+to try IPython</a>.</li>
+<li>Chris Perkins created a <a class="reference external" href="http://showmedo.com/videos/video?name=2910000&amp;fromSeriesID=291">showmedo video including virtualenv</a>.</li>
+<li><a class="reference external" href="http://code.google.com/p/modwsgi/wiki/VirtualEnvironments">Using virtualenv with mod_wsgi</a>.</li>
+</ul>
+</div>
+<div class="section" id="changes-news">
+<h2><a class="toc-backref" href="#id29">Changes &amp; News</a><a class="headerlink" href="#changes-news" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="svn-trunk">
+<h3><a class="toc-backref" href="#id30">svn trunk</a><a class="headerlink" href="#svn-trunk" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fail more gracefully on Windows when <tt class="docutils literal"><span class="pre">win32api</span></tt> is not installed.</li>
+<li>Fix site-packages taking precedent over Jython&#8217;s <tt class="docutils literal"><span class="pre">__classpath__</span></tt>
+and also specially handle the new <tt class="docutils literal"><span class="pre">__pyclasspath__</span></tt> entry in
+<tt class="docutils literal"><span class="pre">sys.path</span></tt>.</li>
+<li>Now copies Jython&#8217;s <tt class="docutils literal"><span class="pre">registry</span></tt> file to the virtualenv if it exists.</li>
+<li>Better find libraries when compiling extensions on Windows.</li>
+<li>Create <tt class="docutils literal"><span class="pre">Scripts\pythonw.exe</span></tt> on Windows.</li>
+<li>Added support for the Debian/Ubuntu
+<tt class="docutils literal"><span class="pre">/usr/lib/pythonX.Y/dist-packages</span></tt> directory.</li>
+<li>Virtualenv now copies the actual embedded Python binary on
+Mac OS X to fix a hang on Snow Leopard (10.6).</li>
+<li>Set <tt class="docutils literal"><span class="pre">distutils.sysconfig.get_config_vars()['LIBDIR']</span></tt> (based on
+<tt class="docutils literal"><span class="pre">sys.real_prefix</span></tt>) which is reported to help building on Windows.</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id31">1.3.3</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Use Windows newlines in <tt class="docutils literal"><span class="pre">activate.bat</span></tt>, which has been reported to help
+when using non-ASCII directory names.</li>
+<li>Fixed compatibility with Jython 2.5b1.</li>
+<li>Added a function <tt class="docutils literal"><span class="pre">virtualenv.install_python</span></tt> for more fine-grained
+access to what <tt class="docutils literal"><span class="pre">virtualenv.create_environment</span></tt> does.</li>
+<li>Fix <a class="reference external" href="https://bugs.launchpad.net/virtualenv/+bug/241581">a problem</a>
+with Windows and paths that contain spaces.</li>
+<li>If <tt class="docutils literal"><span class="pre">/path/to/env/.pydistutils.cfg</span></tt> exists (or
+<tt class="docutils literal"><span class="pre">/path/to/env/pydistutils.cfg</span></tt> on Windows systems) then ignore
+<tt class="docutils literal"><span class="pre">~/.pydistutils.cfg</span></tt> and use that other file instead.</li>
+<li>Fix ` a problem
+&lt;<a class="reference external" href="https://bugs.launchpad.net/virtualenv/+bug/340050">https://bugs.launchpad.net/virtualenv/+bug/340050</a>&gt;`_ picking up
+some <tt class="docutils literal"><span class="pre">.so</span></tt> libraries in <tt class="docutils literal"><span class="pre">/usr/local</span></tt>.</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id32">1.3.2</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Remove the <tt class="docutils literal"><span class="pre">[install]</span> <span class="pre">prefix</span> <span class="pre">=</span> <span class="pre">...</span></tt> setting from the virtualenv
+<tt class="docutils literal"><span class="pre">distutils.cfg</span></tt> &#8211; this has been causing problems for a lot of
+people, in rather obscure ways.</li>
+<li>If you use a <a class="reference internal" href="#creating-your-own-bootstrap-scripts">boot script</a> it will attempt to import <tt class="docutils literal"><span class="pre">virtualenv</span></tt>
+and find a pre-downloaded Setuptools egg using that.</li>
+</ul>
+<ul class="simple">
+<li>Added platform-specific paths, like <tt class="docutils literal"><span class="pre">/usr/lib/pythonX.Y/plat-linux2</span></tt></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id33">1.3.1</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Real Python 2.6 compatibility.  Backported the Python 2.6 updates to
+<tt class="docutils literal"><span class="pre">site.py</span></tt>, including <a class="reference external" href="http://docs.python.org/dev/whatsnew/2.6.html#pep-370-per-user-site-packages-directory">user directories</a>
+(this means older versions of Python will support user directories,
+whether intended or not).</li>
+<li>Always set <tt class="docutils literal"><span class="pre">[install]</span> <span class="pre">prefix</span></tt> in <tt class="docutils literal"><span class="pre">distutils.cfg</span></tt> &#8211; previously
+on some platforms where a system-wide <tt class="docutils literal"><span class="pre">distutils.cfg</span></tt> was present
+with a <tt class="docutils literal"><span class="pre">prefix</span></tt> setting, packages would be installed globally
+(usually in <tt class="docutils literal"><span class="pre">/usr/local/lib/pythonX.Y/site-packages</span></tt>).</li>
+<li>Sometimes Cygwin seems to leave <tt class="docutils literal"><span class="pre">.exe</span></tt> off <tt class="docutils literal"><span class="pre">sys.executable</span></tt>; a
+workaround is added.</li>
+<li>Fix <tt class="docutils literal"><span class="pre">--python</span></tt> option.</li>
+<li>Fixed handling of Jython environments that use a
+jython-complete.jar.</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id34">1.3</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Update to Setuptools 0.6c9</li>
+<li>Added an option <tt class="docutils literal"><span class="pre">virtualenv</span> <span class="pre">--relocatable</span> <span class="pre">EXISTING_ENV</span></tt>, which
+will make an existing environment &#8220;relocatable&#8221; &#8211; the paths will
+not be absolute in scripts, <tt class="docutils literal"><span class="pre">.egg-info</span></tt> and <tt class="docutils literal"><span class="pre">.pth</span></tt> files.  This
+may assist in building environments that can be moved and copied.
+You have to run this <em>after</em> any new packages installed.</li>
+<li>Added <tt class="docutils literal"><span class="pre">bin/activate_this.py</span></tt>, a file you can use like
+<tt class="docutils literal"><span class="pre">execfile(&quot;path_to/activate_this.py&quot;,</span>
+<span class="pre">dict(__file__=&quot;path_to/activate_this.py&quot;))</span></tt> &#8211; this will activate
+the environment in place, similar to what <a class="reference external" href="http://code.google.com/p/modwsgi/wiki/VirtualEnvironments">the mod_wsgi example
+does</a>.</li>
+<li>For Mac framework builds of Python, the site-packages directory
+<tt class="docutils literal"><span class="pre">/Library/Python/X.Y/site-packages</span></tt> is added to <tt class="docutils literal"><span class="pre">sys.path</span></tt>, from
+Andrea Rech.</li>
+<li>Some platform-specific modules in Macs are added to the path now
+(<tt class="docutils literal"><span class="pre">plat-darwin/</span></tt>, <tt class="docutils literal"><span class="pre">plat-mac/</span></tt>, <tt class="docutils literal"><span class="pre">plat-mac/lib-scriptpackages</span></tt>),
+from Andrea Rech.</li>
+<li>Fixed a small Bashism in the <tt class="docutils literal"><span class="pre">bin/activate</span></tt> shell script.</li>
+<li>Added <tt class="docutils literal"><span class="pre">__future__</span></tt> to the list of required modules, for Python
+2.3.  You&#8217;ll still need to backport your own <tt class="docutils literal"><span class="pre">subprocess</span></tt> module.</li>
+<li>Fixed the <tt class="docutils literal"><span class="pre">__classpath__</span></tt> entry in Jython&#8217;s <tt class="docutils literal"><span class="pre">sys.path</span></tt> taking
+precedent over virtualenv&#8217;s libs.</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id35">1.2</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added a <tt class="docutils literal"><span class="pre">--python</span></tt> option to select the Python interpreter.</li>
+<li>Add <tt class="docutils literal"><span class="pre">warnings</span></tt> to the modules copied over, for Python 2.6 support.</li>
+<li>Add <tt class="docutils literal"><span class="pre">sets</span></tt> to the module copied over for Python 2.3 (though Python
+2.3 still probably doesn&#8217;t work).</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id36">1.1.1</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added support for Jython 2.5.</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id37">1.1</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added support for Python 2.6.</li>
+<li>Fix a problem with missing <tt class="docutils literal"><span class="pre">DLLs/zlib.pyd</span></tt> on Windows.  Create</li>
+<li><tt class="docutils literal"><span class="pre">bin/python</span></tt> (or <tt class="docutils literal"><span class="pre">bin/python.exe</span></tt>) even when you run virtualenv
+with an interpreter named, e.g., <tt class="docutils literal"><span class="pre">python2.4</span></tt></li>
+<li>Fix MacPorts Python</li>
+<li>Added &#8211;unzip-setuptools option</li>
+<li>Update to Setuptools 0.6c8</li>
+<li>If the current directory is not writable, run ez_setup.py in <tt class="docutils literal"><span class="pre">/tmp</span></tt></li>
+<li>Copy or symlink over the <tt class="docutils literal"><span class="pre">include</span></tt> directory so that packages will
+more consistently compile.</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id38">1.0</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fix build on systems that use <tt class="docutils literal"><span class="pre">/usr/lib64</span></tt>, distinct from
+<tt class="docutils literal"><span class="pre">/usr/lib</span></tt> (specifically CentOS x64).</li>
+<li>Fixed bug in <tt class="docutils literal"><span class="pre">--clear</span></tt>.</li>
+<li>Fixed typos in <tt class="docutils literal"><span class="pre">deactivate.bat</span></tt>.</li>
+<li>Preserve <tt class="docutils literal"><span class="pre">$PYTHONPATH</span></tt> when calling subprocesses.</li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id39">0.9.2</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fix include dir copying on Windows (makes compiling possible).</li>
+<li>Include the main <tt class="docutils literal"><span class="pre">lib-tk</span></tt> in the path.</li>
+<li>Patch <tt class="docutils literal"><span class="pre">distutils.sysconfig</span></tt>: <tt class="docutils literal"><span class="pre">get_python_inc</span></tt> and
+<tt class="docutils literal"><span class="pre">get_python_lib</span></tt> to point to the global locations.</li>
+<li>Install <tt class="docutils literal"><span class="pre">distutils.cfg</span></tt> before Setuptools, so that system
+customizations of <tt class="docutils literal"><span class="pre">distutils.cfg</span></tt> won&#8217;t effect the installation.</li>
+<li>Add <tt class="docutils literal"><span class="pre">bin/pythonX.Y</span></tt> to the virtualenv (in addition to
+<tt class="docutils literal"><span class="pre">bin/python</span></tt>).</li>
+<li>Fixed an issue with Mac Framework Python builds, and absolute paths
+(from Ronald Oussoren).</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3><a class="toc-backref" href="#id40">0.9.1</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Improve ability to create a virtualenv from inside a virtualenv.</li>
+<li>Fix a little bug in <tt class="docutils literal"><span class="pre">bin/activate</span></tt>.</li>
+<li>Actually get <tt class="docutils literal"><span class="pre">distutils.cfg</span></tt> to work reliably.</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id41">0.9</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added <tt class="docutils literal"><span class="pre">lib-dynload</span></tt> and <tt class="docutils literal"><span class="pre">config</span></tt> to things that need to be
+copied over in an environment.</li>
+<li>Copy over or symlink the <tt class="docutils literal"><span class="pre">include</span></tt> directory, so that you can
+build packages that need the C headers.</li>
+<li>Include a <tt class="docutils literal"><span class="pre">distutils</span></tt> package, so you can locally update
+<tt class="docutils literal"><span class="pre">distutils.cfg</span></tt> (in <tt class="docutils literal"><span class="pre">lib/pythonX.Y/distutils/distutils.cfg</span></tt>).</li>
+<li>Better avoid downloading Setuptools, and hitting PyPI on environment
+creation.</li>
+<li>Fix a problem creating a <tt class="docutils literal"><span class="pre">lib64/</span></tt> directory.</li>
+<li>Should work on MacOSX Framework builds (the default Python
+installations on Mac).  Thanks to Ronald Oussoren.</li>
+</ul>
+</div>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id42">0.8.4</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Windows installs would sometimes give errors about <tt class="docutils literal"><span class="pre">sys.prefix</span></tt> that
+were inaccurate.</li>
+<li>Slightly prettier output.</li>
+</ul>
+</div>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id43">0.8.3</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added support for Windows.</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h3><a class="toc-backref" href="#id44">0.8.2</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Give a better warning if you are on an unsupported platform (Mac
+Framework Pythons, and Windows).</li>
+<li>Give error about running while inside a workingenv.</li>
+<li>Give better error message about Python 2.3.</li>
+</ul>
+</div>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id45">0.8.1</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>Fixed packaging of the library.</p>
+</div>
+<div class="section" id="id17">
+<h3><a class="toc-backref" href="#id46">0.8</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>Initial release.  Everything is changed and new!</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+</div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">virtualenv</a><ul>
+<li><a class="reference external" href="#status-and-license">Status and License</a></li>
+<li><a class="reference external" href="#what-it-does">What It Does</a></li>
+<li><a class="reference external" href="#creating-your-own-bootstrap-scripts">Creating Your Own Bootstrap Scripts</a><ul>
+<li><a class="reference external" href="#bootstrap-example">Bootstrap Example</a></li>
+<li><a class="reference external" href="#activate-script">activate script</a></li>
+<li><a class="reference external" href="#the-no-site-packages-option">The <tt class="docutils literal"><span class="pre">--no-site-packages</span></tt> Option</a></li>
+<li><a class="reference external" href="#using-virtualenv-without-bin-python">Using Virtualenv without <tt class="docutils literal"><span class="pre">bin/python</span></tt></a></li>
+<li><a class="reference external" href="#making-environments-relocatable">Making Environments Relocatable</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#compare-contrast-with-alternatives">Compare &amp; Contrast with Alternatives</a></li>
+<li><a class="reference external" href="#other-documentation-and-links">Other Documentation and Links</a></li>
+<li><a class="reference external" href="#changes-news">Changes &amp; News</a><ul>
+<li><a class="reference external" href="#svn-trunk">svn trunk</a></li>
+<li><a class="reference external" href="#id2">1.3.3</a></li>
+<li><a class="reference external" href="#id3">1.3.2</a></li>
+<li><a class="reference external" href="#id4">1.3.1</a></li>
+<li><a class="reference external" href="#id5">1.3</a></li>
+<li><a class="reference external" href="#id6">1.2</a></li>
+<li><a class="reference external" href="#id7">1.1.1</a></li>
+<li><a class="reference external" href="#id8">1.1</a></li>
+<li><a class="reference external" href="#id9">1.0</a></li>
+<li><a class="reference external" href="#id10">0.9.2</a></li>
+<li><a class="reference external" href="#id11">0.9.1</a></li>
+<li><a class="reference external" href="#id12">0.9</a></li>
+<li><a class="reference external" href="#id13">0.8.4</a></li>
+<li><a class="reference external" href="#id14">0.8.3</a></li>
+<li><a class="reference external" href="#id15">0.8.2</a></li>
+<li><a class="reference external" href="#id16">0.8.1</a></li>
+<li><a class="reference external" href="#id17">0.8</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+<!--
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="">virtualenv v1.3.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div> -->
+<div id="footer">
+	<div class="content">
+		<h1><a href="http://topplabs.org/">TOPP Labs</a></h1>
+		<h2><span>Open Source Civic Hacking @ </span><a href="http://theopenplanningproject.org/" onclick="pageTracker._trackPageview('/outgoing/theopenplanningproject.org?referer=');">The Open Planning Project</a></h2>
+		<ul class="nav">
+			
+			<li class="nav-blog"><a href="http://topplabs.org/civichacker/">The Civic Hacker Blog</a></li>
+			<li class="nav-wiki"><a href="http://ideas.topplabs.org/" onclick="pageTracker._trackPageview('/outgoing/ideas.topplabs.org/?referer=');">Ideas Wiki</a></li>
+			<li class="nav-lists"><a href="http://lists.topplabs.org/civichacker" onclick="pageTracker._trackPageview('/outgoing/lists.topplabs.org/civichacker?referer=');">Discussion Lists</a></li>
+			<li class="nav-about"><a href="http://topplabs.org/about/">About</a></li>
+			
+		</ul>
+    	
+	</div>
+</div>
+    
+<!--    <div class="footer">
+      &copy; Copyright 2009, Ian Bicking, The Open Planning Project.
+      Last updated on Sep 16, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.2.
+    </div> -->
+  </body>
+</html>
